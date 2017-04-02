@@ -1,0 +1,23 @@
+defmodule CrowdfundingApi.ProjectView do
+  use CrowdfundingApi.Web, :view
+
+  def render("index.json", %{projects: projects}) do
+    %{data: render_many(projects, CrowdfundingApi.ProjectView, "project.json")}
+  end
+
+  def render("show.json", %{project: project}) do
+    %{data: render_one(project, CrowdfundingApi.ProjectView, "project.json")}
+  end
+
+  def render("project.json", %{project: project}) do
+    %{id: project.id,
+      title: project.title,
+      category_id: project.category_id,
+      image_url: project.image_url,
+      video_url: project.video_url,
+      goal_amount: project.goal_amount,
+      funding_model: project.funding_model,
+      start_date: project.start_date,
+      duration: project.duration}
+  end
+end
