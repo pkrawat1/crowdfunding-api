@@ -6,7 +6,7 @@ defmodule CrowdfundingApi.ProjectView do
   end
 
   def render("show.json", %{project: project}) do
-    %{data: render_one(project, CrowdfundingApi.ProjectView, "project.json")}
+    render_one(project, CrowdfundingApi.ProjectView, "project.json")
   end
 
   def render("project.json", %{project: project}) do
@@ -19,5 +19,9 @@ defmodule CrowdfundingApi.ProjectView do
       funding_model: project.funding_model,
       start_date: project.start_date,
       duration: project.duration}
+  end
+
+  def render("categories.json", %{categories: categories}) do
+    render_many(categories, CrowdfundingApi.CategoryView, "category.json")
   end
 end

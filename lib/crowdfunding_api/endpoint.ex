@@ -38,5 +38,15 @@ defmodule CrowdfundingApi.Endpoint do
     key: "_crowdfunding_api_key",
     signing_salt: "Sv3caX8l"
 
+  plug Corsica,
+    origins: ["https://aviabird.github.io", "http://localhost:4200"],
+    allow_headers: [
+      "access-control-allow-origin",
+      "authorization",
+      "content-type",
+      "x-auth-token",
+      "origin"
+    ]
+
   plug CrowdfundingApi.Router
 end

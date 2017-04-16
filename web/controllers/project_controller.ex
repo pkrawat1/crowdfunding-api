@@ -2,13 +2,14 @@ defmodule CrowdfundingApi.ProjectController do
   use CrowdfundingApi.Web, :controller
 
   alias CrowdfundingApi.Project
+  alias CrowdfundingApi.Category
 
   def index(conn, _params) do
     projects = Repo.all(Project)
     render(conn, "index.json", projects: projects)
   end
 
-  def create(conn, %{"project" => project_params}) do
+  def create(conn, project_params) do
     changeset = Project.changeset(%Project{}, project_params)
 
     case Repo.insert(changeset) do
@@ -25,6 +26,11 @@ defmodule CrowdfundingApi.ProjectController do
   end
 
   def show(conn, %{"id" => id}) do
+    project = Repo.get!(Project, id)
+    render(conn, "show.json", project: project)
+  end
+
+  def draft(conn, %{"id" => id}) do
     project = Repo.get!(Project, id)
     render(conn, "show.json", project: project)
   end
@@ -51,5 +57,10 @@ defmodule CrowdfundingApi.ProjectController do
     Repo.delete!(project)
 
     send_resp(conn, :no_content, "")
+  end
+
+  def category(conn, _params) do
+    categories = Repo.all(Category)
+    render(conn, "categories.json", categories: categories)
   end
 end
