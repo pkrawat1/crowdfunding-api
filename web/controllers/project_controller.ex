@@ -30,8 +30,12 @@ defmodule CrowdfundingApi.ProjectController do
     render(conn, "show.json", project: project)
   end
 
-  def draft(conn, %{"id" => id}) do
-    project = Repo.get!(Project, id)
+  def draft(conn, _params) do
+    project = Repo.get_by(Project, approved: false) ||
+              %{id: nil, title: nil, category_id: nil, image_url: nil,
+                video_url: nil, goal_amount: nil, funding_model: nil,
+                start_date: nil, duration: nil
+              }
     render(conn, "show.json", project: project)
   end
 

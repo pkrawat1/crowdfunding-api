@@ -10,7 +10,9 @@ defmodule CrowdfundingApi.Repo.Migrations.CreateProject do
       add :funding_model, :string
       add :start_date, :datetime
       add :duration, :integer
+      add :approved, :boolean
       add :category_id, references(:categories, on_delete: :nothing)
+      add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end

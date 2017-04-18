@@ -10,6 +10,7 @@ defmodule CrowdfundingApi.Project do
     field :funding_model, :string
     field :start_date, Ecto.DateTime
     field :duration, :integer
+    field :approved, :boolean
     belongs_to :category, CrowdfundingApi.Category
 
     has_many :rewards, CrowdfundingApi.Reward, on_delete: :delete_all
@@ -27,7 +28,7 @@ defmodule CrowdfundingApi.Project do
   def changeset(struct, params \\ %{}) do
     Map.put(params, :image_url, upload_image(params))
     struct
-    |> cast(params, [:title, :image_url, :video_url, :goal_amount, :funding_model, :start_date, :duration])
+    |> cast(params, [:title, :image_url, :video_url, :goal_amount, :funding_model, :start_date, :duration, :approved])
     # |> validate_required([:title, :image_url, :video_url, :goal_amount, :funding_model, :start_date, :duration])
     # |> validate_url(:image_url, %{ message: "invalid image url" })
     # |> validate_url(:video_url, %{ message: "invalid image url" })

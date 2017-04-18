@@ -22,24 +22,24 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :guardian, Guardian,
+  issuer: "CrowdfundingApi.#{Mix.env}",
+  ttl: {30, :days},
+  verify_issuer: true,
+  serializer: CrowdfundingApi.GuardianSerializer,
+  secret_key: to_string(Mix.env),
+  hooks: GuardianDb,
+  permissions: %{
+    default: [
+      :read_profile,
+      :write_profile,
+      :read_token,
+      :revoke_token,
+    ],
+  }
 
-
-#********************************
-# Social Login Config
-#********************************
-  config :ueberauth, Ueberauth,
-    providers: [
-      facebook: { Ueberauth.Strategy.Facebook, [] },
-      # github: { Ueberauth.Strategy.Google, [ opt1: "value", opts2: "value" ] }
-    ]
-
-  config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
-    client_id: "1858256201095547", # System.get_env("FACEBOOK_CLIENT_ID"),
-    client_secret: "08995d4a535aae99cffae561cf730e6d"# System.get_env("FACEBOOK_CLIENT_SECRET")
-#********************************
-#********************************
-
-
+config :guardian_db, GuardianDb,
+  repo: CrowdfundingApi.Repo
 
 
 
@@ -51,18 +51,3 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-
-# %% Coherence Configuration %%   Don't remove this line
-config :coherence,
-  user_schema: CrowdfundingApi.User,
-  repo: CrowdfundingApi.Repo,
-  module: CrowdfundingApi,
-  logged_out_url: "/",
-  email_from_name: "Your Name",
-  email_from_email: "yourname@example.com",
-  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
-
-config :coherence, CrowdfundingApi.Coherence.Mailer,
-  adapter: Swoosh.Adapters.Sendgrid,
-  api_key: "your api key here"
-# %% End Coherence Configuration %%

@@ -20,7 +20,7 @@ defmodule CrowdfundingApi.Mixfile do
     [mod: {CrowdfundingApi, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
                     :gettext, :phoenix_ecto, :postgrex, :corsica, :httpotion,
-                    :ueberauth, :ueberauth_facebook]]
+                    :oauth2, :ueberauth_facebook, :comeonin, :gproc]]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,8 +42,14 @@ defmodule CrowdfundingApi.Mixfile do
      {:corsica, "~> 0.5"},
      {:ex_machina, "~> 1.0", only: :test},
      {:httpotion, "~> 3.0.2"},
-     {:ueberauth, "~> 0.4"},
+     {:comeonin, "~> 3.0.2"},
+     {:guardian_db, "~> 0.8.0"},
+     {:guardian, "~> 0.14.2"},
+     {:ueberauth, "~> 0.4.0"},
+     {:ueberauth_identity, "~> 0.2.3"},
      {:ueberauth_facebook, "~> 0.6"},
+     {:amnesia, github: "meh/amnesia", tag: :master},
+     {:gproc, "~> 0.6.1"},
     ]
   end
 
